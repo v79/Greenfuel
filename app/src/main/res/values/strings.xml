@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Fuel Recorder</string>
+    <string name="btn_Delete">Delete</string>
+    <string name="btn_Save">Save</string>
+    <string name="lbl_Date">Date</string>
+    <string name="lbl_UnitLitres">Litres</string>
+    <string name="lbl_UnitGallons">Gallons</string>
+    <string name="lbl_Cost">Cost</string>
+    <string name="lbl_Odometer">Odometer</string>
+    <string name="lbl_UnitMiles">Miles</string>
+    <string name="lbl_UnitKilometers">Kilometers</string>
+    <string name="lbl_UnitKM">km</string>
+    <string name="hnt_setDate">Click to set date</string>
+    <string name="error_RecordFuel_DateEmpty">A date is required</string>
+    <string name="error_RecordFuel_CostEmpty">A total cost is required</string>
+    <string name="error_RecordFuel_LitresEmpty">The volume of fuel cannot be empty</string>
+    <string name="error_CorrectInput">Please correct your input</string>
+    <string name="msg_RecordDeleted">"Deleted record "</string>
+    <string name="error_RecordDeleteFailed">Failed to delete record!</string>
+    <string name="title_activity_main_settings">Settings</string>
+    <string name="menu_mainSettings">Settings</string>
+    <string name="menu_mainDeveloper">Developer</string>
+    <string name="btn_dev_EmptyDB">Empty Database</string>
+    <string name="btn_dev_createFakeRecords">Create Fake Records</string>
+    <string name="hnt_fuelVolume">Fuel volume</string>
+    <string name="hnt_totalCost">Total cost</string>
+    <string name="hnt_Odo">Odometer</string>
+    <string name="register_vehicle_title">Register New Vehicle</string>
+    <string name="title_activity_developer_tools">DeveloperTools</string>
+    <string name="title_activity_record_fuel">RecordFuelActivity</string>
+    <string name="action_settings">Settings</string>
+</resources>

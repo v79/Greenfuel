@@ -1,0 +1,198 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/recordVehicleFragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".fragments.RecordVehicleFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="160dip">
+
+            <EditText
+                android:id="@+id/editManufacturer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:width="180dip"
+                android:hint="Manufacturer">
+
+                <requestFocus/>
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="120dip"
+                android:hint="Model"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editOdometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="180dip"
+                android:focusable="true"
+                android:hint="Odometer Reading"
+                android:inputType="number"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editEngineSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="120dip"
+                android:ems="10"
+                android:hint="Engine Size"
+                android:inputType="numberDecimal"/>
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/editRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:width="180dip"
+            android:hint="Registration"
+            android:maxLines="1"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/editRegistrationDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/editEngineSize"
+                android:width="180dip"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Date added"
+                android:inputType="date"/>
+        </android.support.design.widget.TextInputLayout>
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Fuel Type"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblFuelType"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:paddingLeft="5dp"
+            />
+
+        <Spinner
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fuelTypeSpinner"
+            style="@style/Widget.AppCompat.Spinner"
+            android:paddingRight="5dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Distance Units"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_distanceUnits"
+            android:paddingLeft="5dp"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+        <ToggleButton
+            android:text="Distance Units"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/toggleDistanceUnits"
+            android:layout_weight="1"
+            android:textOff="Imperial (Miles)"
+            android:textOn="Metric (Kilometers)"
+            android:checked="true"
+            android:hint="Distance Units"
+            android:paddingLeft="5dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Fuel Volume Units"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/lbl_fuelVolUnits"
+            android:paddingLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_weight="1"/>
+
+        <ToggleButton
+            android:text="Distance Units"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/toggleFuelUnits"
+            android:layout_weight="1"
+            android:textOff="Imperial (Gallons)"
+            android:textOn="Metric (Litres)"
+            android:checked="true"
+            android:hint="Fuel Volume Units"
+            android:paddingLeft="5dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSaveVehicle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Save"/>
+
+
+</LinearLayout>
