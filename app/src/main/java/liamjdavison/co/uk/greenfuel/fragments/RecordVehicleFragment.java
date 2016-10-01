@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Locale;
 
 import liamjdavison.co.uk.greenfuel.R;
-import liamjdavison.co.uk.greenfuel.model.FuelType;
 import liamjdavison.co.uk.greenfuel.model.Vehicle;
 
 import static liamjdavison.co.uk.greenfuel.R.id.fuelTypeSpinner;
@@ -130,7 +129,7 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 	/**
 	 * Attach this class to its parent activity in order to return the VehicleID
 	 *
-	 * @param context
+	 * @param context the Android context
 	 */
 	@Override
 	public void onAttach(Context context) {
@@ -149,7 +148,7 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 	/**
 	 * Handle device changes, eg orientation
 	 *
-	 * @param outState
+	 * @param outState current status bundle to save
 	 */
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -161,7 +160,7 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 	/**
 	 * Restore state after a device change
 	 *
-	 * @param savedInstanceState
+	 * @param savedInstanceState status bundle
 	 */
 	@Override
 	public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
@@ -175,7 +174,7 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 	/**
 	 * Construct a new Vehicle from our values
 	 *
-	 * @return
+	 * @return a new Vehicle
 	 */
 
 	private Vehicle buildVehicle() {

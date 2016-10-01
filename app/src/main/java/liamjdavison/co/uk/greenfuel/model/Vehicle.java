@@ -1,18 +1,15 @@
 package liamjdavison.co.uk.greenfuel.model;
 
+import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.JoinProperty;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.ToMany;
-import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.Date;
 import java.util.List;
-
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
 
 /**
  * Created by Liam Davison on 08/08/2016.
@@ -32,6 +29,7 @@ public class Vehicle {
 	@NotNull
 	@Unique
 	private String registration;
+
 	@NotNull
 	private Float engineSize;
 
@@ -39,31 +37,41 @@ public class Vehicle {
 
 	private Integer currentOdo;
 
-//	private Units distanceUnit;
-
-//	private Units fuelVolumeUnit;
-
-	private Long fuelTypeId;
-	@ToOne(joinProperty = "fuelTypeId")
-	private FuelType fuelType;
-
 	@NotNull
 	private Date registeredDate;
 
 	@ToMany(referencedJoinProperty = "vehicleId")
 	private List<FuelRecord> fuelRecords;
 
-	/** Used for active entity operations. */
+	/**
+	 * Used for active entity operations.
+	 */
 	@Generated(hash = 900796925)
 	private transient VehicleDao myDao;
 
-	/** Used to resolve relations */
+	/**
+	 * Used to resolve relations
+	 */
 	@Generated(hash = 2040040024)
 	private transient DaoSession daoSession;
 
-	@Generated(hash = 165448936)
-	private transient Long fuelType__resolvedKey;
+	@Generated(hash = 616246363)
+	public Vehicle(Long id, @NotNull String manufacturer, @NotNull String model,
+				   @NotNull String registration, @NotNull Float engineSize, Integer startOdo,
+				   Integer currentOdo, @NotNull Date registeredDate) {
+		this.id = id;
+		this.manufacturer = manufacturer;
+		this.model = model;
+		this.registration = registration;
+		this.engineSize = engineSize;
+		this.startOdo = startOdo;
+		this.currentOdo = currentOdo;
+		this.registeredDate = registeredDate;
+	}
 
+	@Generated(hash = 2006430483)
+	public Vehicle() {
+	}
 
 	public Date getRegisteredDate() {
 		return this.registeredDate;
@@ -132,15 +140,13 @@ public class Vehicle {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.getManufacturer()+ " ");
-		sb.append(this.getModel() + " ");
-		sb.append(this.getRegistration() + " (" + this.getRegisteredDate() + ") ");
-		sb.append(this.getEngineSize() + " ");
-		sb.append("(Odo " + this.getStartOdo() + "/" + this.getCurrentOdo() + ") ");
-		sb.append("Fuel type : " + this.getFuelType());
+		sb.append(this.getManufacturer()).append(" ");
+		sb.append(this.getModel()).append(" ");
+		sb.append(this.getRegistration()).append(" (").append(this.getRegisteredDate()).append(") ");
+		sb.append(this.getEngineSize()).append(" ");
+		sb.append("(Odo ").append(this.getStartOdo()).append("/").append(this.getCurrentOdo()).append(")");
 
 		return sb.toString();
-
 	}
 
 	/**
@@ -179,7 +185,9 @@ public class Vehicle {
 		myDao.delete(this);
 	}
 
-	/** Resets a to-many relationship, making the next get call to query for a fresh result. */
+	/**
+	 * Resets a to-many relationship, making the next get call to query for a fresh result.
+	 */
 	@Generated(hash = 834597005)
 	public synchronized void resetFuelRecords() {
 		fuelRecords = null;
@@ -191,83 +199,29 @@ public class Vehicle {
 	 */
 	@Generated(hash = 690229951)
 	public List<FuelRecord> getFuelRecords() {
-	    if (fuelRecords == null) {
-	        final DaoSession daoSession = this.daoSession;
-	        if (daoSession == null) {
-	            throw new DaoException("Entity is detached from DAO context");
-	        }
-	        FuelRecordDao targetDao = daoSession.getFuelRecordDao();
-	        List<FuelRecord> fuelRecordsNew = targetDao._queryVehicle_FuelRecords(id);
-	        synchronized (this) {
-	            if(fuelRecords == null) {
-	                fuelRecords = fuelRecordsNew;
-	            }
-	        }
-	    }
-	    return fuelRecords;
-	}
-
-	/** called by internal mechanisms, do not call yourself. */
-	@Generated(hash = 1588469812)
-	public void __setDaoSession(DaoSession daoSession) {
-		this.daoSession = daoSession;
-		myDao = daoSession != null ? daoSession.getVehicleDao() : null;
-	}
-
-	/** called by internal mechanisms, do not call yourself. */
-	@Generated(hash = 1092170329)
-	public void setFuelType(FuelType fuelType) {
-		synchronized (this) {
-			this.fuelType = fuelType;
-			fuelTypeId = fuelType == null ? null : fuelType.getId();
-			fuelType__resolvedKey = fuelTypeId;
-		}
-	}
-
-	/** To-one relationship, resolved on first access. */
-	@Generated(hash = 561729034)
-	public FuelType getFuelType() {
-		Long __key = this.fuelTypeId;
-		if (fuelType__resolvedKey == null || !fuelType__resolvedKey.equals(__key)) {
+		if (fuelRecords == null) {
 			final DaoSession daoSession = this.daoSession;
 			if (daoSession == null) {
 				throw new DaoException("Entity is detached from DAO context");
 			}
-			FuelTypeDao targetDao = daoSession.getFuelTypeDao();
-			FuelType fuelTypeNew = targetDao.load(__key);
+			FuelRecordDao targetDao = daoSession.getFuelRecordDao();
+			List<FuelRecord> fuelRecordsNew = targetDao._queryVehicle_FuelRecords(id);
 			synchronized (this) {
-				fuelType = fuelTypeNew;
-				fuelType__resolvedKey = __key;
+				if (fuelRecords == null) {
+					fuelRecords = fuelRecordsNew;
+				}
 			}
 		}
-		return fuelType;
+		return fuelRecords;
 	}
 
-	public Long getFuelTypeId() {
-		return this.fuelTypeId;
-	}
-
-	public void setFuelTypeId(Long fuelTypeId) {
-		this.fuelTypeId = fuelTypeId;
-	}
-
-	@Generated(hash = 1026554166)
-	public Vehicle(Long id, @NotNull String manufacturer, @NotNull String model,
-			@NotNull String registration, @NotNull Float engineSize, Integer startOdo,
-			Integer currentOdo, Long fuelTypeId, @NotNull Date registeredDate) {
-		this.id = id;
-		this.manufacturer = manufacturer;
-		this.model = model;
-		this.registration = registration;
-		this.engineSize = engineSize;
-		this.startOdo = startOdo;
-		this.currentOdo = currentOdo;
-		this.fuelTypeId = fuelTypeId;
-		this.registeredDate = registeredDate;
-	}
-
-	@Generated(hash = 2006430483)
-	public Vehicle() {
+	/**
+	 * called by internal mechanisms, do not call yourself.
+	 */
+	@Generated(hash = 1588469812)
+	public void __setDaoSession(DaoSession daoSession) {
+		this.daoSession = daoSession;
+		myDao = daoSession != null ? daoSession.getVehicleDao() : null;
 	}
 
 }
