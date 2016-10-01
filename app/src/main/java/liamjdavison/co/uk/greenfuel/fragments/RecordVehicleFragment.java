@@ -24,7 +24,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import liamjdavison.co.uk.greenfuel.GreenFuel;
 import liamjdavison.co.uk.greenfuel.R;
+import liamjdavison.co.uk.greenfuel.ReferenceData;
+import liamjdavison.co.uk.greenfuel.model.DaoSession;
+import liamjdavison.co.uk.greenfuel.model.FuelType;
+import liamjdavison.co.uk.greenfuel.model.FuelTypeDao;
 import liamjdavison.co.uk.greenfuel.model.Vehicle;
 
 import static liamjdavison.co.uk.greenfuel.R.id.fuelTypeSpinner;
@@ -40,12 +45,18 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 
 	OnVehicleCreatedListener mVehicleCreatedCallback;
 
+	private ReferenceData refData;
+
+	private FuelTypeDao fuelTypeDao;
+
 	private EditText manufacturer, model, registration, odometer, engineSize, editStartDate;
 	private Button btnSave;
 	private Vehicle vehicle;
 	private Calendar startDate;
 	private TextInputLayout tilStartDate;
 	private Spinner fuelTypePicker;
+
+	private FuelType selectedFuelType;
 
 	@Nullable
 	@Override
@@ -59,30 +70,8 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 		engineSize = (EditText) fView.findViewById(R.id.editEngineSize);
 		editStartDate = (EditText) fView.findViewById(R.id.editRegistrationDate);
 		tilStartDate = (TextInputLayout) fView.findViewById(R.id.tilStartDate);
-		fuelTypePicker = (Spinner) fView.findViewById(fuelTypeSpinner);
 
-		List<String> fuelTypes = new ArrayList<>();
-		fuelTypes.add("Petrol");
-		fuelTypes.add("Diesel");
-		fuelTypes.add("Electric");
-		ArrayAdapter<String> fuelTypeAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, fuelTypes);
-		fuelTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		fuelTypePicker.setAdapter(fuelTypeAdapter);
-
-		fuelTypePicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			 @Override
-			 public void onItemSelected(AdapterView<?> parent, View view,
-										int position, long id) {
-				 Log.v("fuelType", (String) parent.getItemAtPosition(position));
-//				 vehicle.setFuelType(FuelType.getTypeWithName((String) parent.getItemAtPosition(position)));
-			 }
-
-			 @Override
-			 public void onNothingSelected(AdapterView<?> parent) {
-				// Do nothing
-			 }
-		 });
-
+		buildFuelTypeSpinner(fView);
 
 		btnSave = (Button) fView.findViewById(R.id.btnSaveVehicle);
 		btnSave.setOnClickListener(new View.OnClickListener()
@@ -126,6 +115,33 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 		return fView;
 	}
 
+	private void buildFuelTypeSpinner(View fView) {
+		fuelTypePicker = (Spinner) fView.findViewById(fuelTypeSpinner);
+		List<FuelType> fuelTypesList = refData.getFuelTypes();
+		List<String> fuelTypes = new ArrayList<>();
+		for (FuelType ft : fuelTypesList) {
+			fuelTypes.add(ft.getName());
+		}
+		ArrayAdapter<String> fuelTypeAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, fuelTypes);
+		fuelTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		fuelTypePicker.setAdapter(fuelTypeAdapter);
+
+		fuelTypePicker.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+									   int position, long id) {
+				Log.v("fuelType", (String) parent.getItemAtPosition(position));
+				selectedFuelType = refData.getFuelTypeWithName((String) parent.getItemAtPosition(position));
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// Do nothing
+			}
+		});
+
+	}
+
 	/**
 	 * Attach this class to its parent activity in order to return the VehicleID
 	 *
@@ -138,6 +154,7 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 		try {
 			activity = (Activity) context;
 			mVehicleCreatedCallback = (OnVehicleCreatedListener) activity;
+			refData = (ReferenceData) context;
 		} catch (ClassCastException cce) {
 			throw new ClassCastException(context.toString()
 					+ " must implement OnVehicleCreatedListener");
@@ -185,6 +202,7 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 		v.setStartOdo(Integer.parseInt(odometer.getText().toString()));
 		v.setEngineSize(Float.parseFloat(engineSize.getText().toString()));
 		v.setRegisteredDate(startDate.getTime());
+		v.setFuelType(selectedFuelType);
 		return v;
 	}
 

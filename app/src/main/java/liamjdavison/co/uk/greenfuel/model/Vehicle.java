@@ -156,7 +156,8 @@ public class Vehicle {
 		sb.append(this.getModel()).append(" ");
 		sb.append(this.getRegistration()).append(" (").append(this.getRegisteredDate()).append(") ");
 		sb.append(this.getEngineSize()).append(" ");
-		sb.append("(Odo ").append(this.getStartOdo()).append("/").append(this.getCurrentOdo()).append(")");
+		sb.append("(Odo ").append(this.getStartOdo()).append("/").append(this.getCurrentOdo()).append(") ");
+		sb.append(this.getFuelType().getName());
 
 		return sb.toString();
 	}
