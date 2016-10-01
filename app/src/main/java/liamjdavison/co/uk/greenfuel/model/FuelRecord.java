@@ -36,9 +36,6 @@ public class FuelRecord implements Parcelable {
 
 	// this is the join parameter; I don't need to specify both sides of the relationship
 	private Long vehicleId;
-//	@ToOne(joinProperty = "vehicleId")
-//	private Vehicle vehicle;
-
 
 	public FuelRecord(Date date, BigDecimal cost, BigDecimal fuelVolume, int odometer, Long vehicleId) {
 		this.setDate(date);

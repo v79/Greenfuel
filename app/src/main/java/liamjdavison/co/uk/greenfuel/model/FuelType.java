@@ -2,19 +2,40 @@ package liamjdavison.co.uk.greenfuel.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 
 /**
+ * A simple table representing a fuel type, e.g. Petrol or Diesel
  * Created by Liam Davison on 29/09/2016.
  */
+@Entity
 public class FuelType {
 
-	private Boolean metric;
+	@Id(autoincrement = true)
+	private Long id;
+
 	private String name;
 
 	public FuelType(String name) {
 		this.name = name;
+	}
+
+	@Generated(hash = 234358082)
+	public FuelType(Long id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
+	@Generated(hash = 1777130301)
+	public FuelType() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -25,16 +46,8 @@ public class FuelType {
 		this.name = name;
 	}
 
-	public Boolean getMetric() {
-		return this.metric;
-	}
-
-	public void setMetric(Boolean isMetric) {
-		this.metric = isMetric;
-	}
-
 	@Override
 	public String toString() {
-		return this.getName() + "(Metric: " + this.getMetric() + ")";
+		return this.getName();
 	}
 }

@@ -15,6 +15,8 @@ import java.util.List;
 
 import liamjdavison.co.uk.greenfuel.model.DaoSession;
 import liamjdavison.co.uk.greenfuel.model.FuelRecordDao;
+import liamjdavison.co.uk.greenfuel.model.FuelType;
+import liamjdavison.co.uk.greenfuel.model.FuelTypeDao;
 import liamjdavison.co.uk.greenfuel.model.Vehicle;
 import liamjdavison.co.uk.greenfuel.model.VehicleDao;
 
@@ -28,6 +30,8 @@ public class DeveloperTools extends AppCompatActivity {
 	private VehicleDao vehicleDao;
 	private FuelRecordDao fuelRecordDao;
 
+	private FuelTypeDao fuelTypeDao;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,11 +43,21 @@ public class DeveloperTools extends AppCompatActivity {
 		DaoSession daoSession = ((GreenFuel) getApplication()).getDaoSession();
 		vehicleDao = daoSession.getVehicleDao();
 		fuelRecordDao = daoSession.getFuelRecordDao();
+		fuelTypeDao = daoSession.getFuelTypeDao();
 		buildLayout();
 
+		logFuelTypes();
 		logAllVehicles();
 	}
 
+	private void logFuelTypes() {
+		List<FuelType> fuelTypes = fuelTypeDao.loadAll();
+		if (fuelTypes != null) {
+			for (FuelType ft : fuelTypes) {
+				Log.v("Fuel Type " + ft.getId(), ft.getName());
+			}
+		}
+	}
 	private void logAllVehicles() {
 		List<Vehicle> vehicles = vehicleDao.loadAll();
 		if(vehicles != null && vehicles.size() > 0) {
