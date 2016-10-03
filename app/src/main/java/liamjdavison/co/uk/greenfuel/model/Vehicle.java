@@ -8,6 +8,7 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Unique;
+import org.greenrobot.greendao.converter.PropertyConverter;
 
 import java.util.Date;
 import java.util.List;
@@ -51,6 +52,10 @@ public class Vehicle {
 	@ToOne(joinProperty = "fuelTypeId")
 	private FuelType fuelType;
 
+	private Boolean distanceIsMetric;
+
+	private Boolean fuelVolumeIsMetric;
+
 	/**
 	 * Used for active entity operations.
 	 */
@@ -66,10 +71,11 @@ public class Vehicle {
 	@Generated(hash = 165448936)
 	private transient Long fuelType__resolvedKey;
 
-	@Generated(hash = 2102786678)
+	@Generated(hash = 601653091)
 	public Vehicle(Long id, @NotNull String manufacturer, @NotNull String model,
 				   @NotNull String registration, @NotNull Float engineSize, Integer startOdo, Integer currentOdo,
-				   @NotNull Date registeredDate, Long fuelTypeId) {
+				   @NotNull Date registeredDate, Long fuelTypeId, Boolean distanceIsMetric,
+				   Boolean fuelVolumeIsMetric) {
 		this.id = id;
 		this.manufacturer = manufacturer;
 		this.model = model;
@@ -79,6 +85,8 @@ public class Vehicle {
 		this.currentOdo = currentOdo;
 		this.registeredDate = registeredDate;
 		this.fuelTypeId = fuelTypeId;
+		this.distanceIsMetric = distanceIsMetric;
+		this.fuelVolumeIsMetric = fuelVolumeIsMetric;
 	}
 
 	@Generated(hash = 2006430483)
@@ -157,7 +165,9 @@ public class Vehicle {
 		sb.append(this.getRegistration()).append(" (").append(this.getRegisteredDate()).append(") ");
 		sb.append(this.getEngineSize()).append(" ");
 		sb.append("(Odo ").append(this.getStartOdo()).append("/").append(this.getCurrentOdo()).append(") ");
-		sb.append(this.getFuelType().getName());
+		sb.append(this.getFuelType().getName()).append(" ");
+		sb.append(this.getDistanceIsMetric() ? "km" : "miles").append(" per ");
+		sb.append(this.getFuelVolumeIsMetric() ? "litre" : "gallon");
 
 		return sb.toString();
 	}
@@ -278,6 +288,21 @@ public class Vehicle {
 		this.fuelTypeId = fuelTypeId;
 	}
 
+	public Boolean getDistanceIsMetric() {
+		return distanceIsMetric;
+	}
+
+	public void setDistanceIsMetric(Boolean distanceIsMetric) {
+		this.distanceIsMetric = distanceIsMetric;
+	}
+
+	public Boolean getFuelVolumeIsMetric() {
+		return fuelVolumeIsMetric;
+	}
+
+	public void setFuelVolumeIsMetric(Boolean fuelVolumeIsMetric) {
+		this.fuelVolumeIsMetric = fuelVolumeIsMetric;
+	}
 }
 
 

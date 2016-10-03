@@ -53,12 +53,9 @@ public class FuelRecordRecyclerAdapter extends RecyclerView.Adapter<FRViewHolder
 
 		holder.rowDate.setText(simpleDateFormat.format(record.getDate().getTime()));
 		holder.rowCost.setText(new StringBuilder().append(currency.getSymbol()).append(record.getCost()));
-
 		final String fuelText = new StringBuilder().append(decimalFormat.format(record.getFuelVolume())).toString();
 		holder.rowFuel.setText(fuelText);
-
-		//TODO: hack
-	holder.rowOdo.setText("vehicle: " + record.getVehicleId());
+		holder.rowOdo.setText(String.valueOf(record.getOdometer()));
 
 		holder.cardView.setOnClickListener(new View.OnClickListener() {
 			@Override

@@ -14,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,17 +26,17 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import liamjdavison.co.uk.greenfuel.GreenFuel;
 import liamjdavison.co.uk.greenfuel.R;
 import liamjdavison.co.uk.greenfuel.ReferenceData;
-import liamjdavison.co.uk.greenfuel.model.DaoSession;
 import liamjdavison.co.uk.greenfuel.model.FuelType;
 import liamjdavison.co.uk.greenfuel.model.FuelTypeDao;
 import liamjdavison.co.uk.greenfuel.model.Vehicle;
 
 import static liamjdavison.co.uk.greenfuel.R.id.fuelTypeSpinner;
+import static liamjdavison.co.uk.greenfuel.R.id.toggleDistanceUnits;
 
 /**
+ * Fragment for capturing information about a new Vehicle
  * Created by Liam Davison on 08/08/2016.
  */
 public class RecordVehicleFragment extends Fragment implements DatePickerFragment.OnDateSelectedListener {
@@ -47,14 +49,14 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 
 	private ReferenceData refData;
 
-	private FuelTypeDao fuelTypeDao;
-
 	private EditText manufacturer, model, registration, odometer, engineSize, editStartDate;
 	private Button btnSave;
 	private Vehicle vehicle;
 	private Calendar startDate;
 	private TextInputLayout tilStartDate;
 	private Spinner fuelTypePicker;
+
+	private ToggleButton fuelUnits, distanceUnits;
 
 	private FuelType selectedFuelType;
 
@@ -70,6 +72,9 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 		engineSize = (EditText) fView.findViewById(R.id.editEngineSize);
 		editStartDate = (EditText) fView.findViewById(R.id.editRegistrationDate);
 		tilStartDate = (TextInputLayout) fView.findViewById(R.id.tilStartDate);
+		fuelUnits = (ToggleButton) fView.findViewById(R.id.toggleFuelUnits);
+		distanceUnits = (ToggleButton) fView.findViewById(R.id.toggleDistanceUnits);
+
 
 		buildFuelTypeSpinner(fView);
 
@@ -87,7 +92,6 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 	   }
 
 		);
-
 
 		editStartDate.setOnClickListener(new View.OnClickListener()
 		 {
@@ -158,7 +162,6 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 		} catch (ClassCastException cce) {
 			throw new ClassCastException(context.toString()
 					+ " must implement OnVehicleCreatedListener");
-
 		}
 	}
 
@@ -203,6 +206,8 @@ public class RecordVehicleFragment extends Fragment implements DatePickerFragmen
 		v.setEngineSize(Float.parseFloat(engineSize.getText().toString()));
 		v.setRegisteredDate(startDate.getTime());
 		v.setFuelType(selectedFuelType);
+		v.setDistanceIsMetric(distanceUnits.isChecked());
+		v.setFuelVolumeIsMetric(fuelUnits.isChecked());
 		return v;
 	}
 

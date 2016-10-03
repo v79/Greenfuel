@@ -140,7 +140,6 @@ public class FuelRecorderOverview extends AppCompatActivity {
 		switch (item.getItemId()) {
 			case R.id.menu_developer:
 				// show developer activity
-
 				Intent developerIntent = new Intent(this, DeveloperTools.class);
 				startActivity(developerIntent);
 				return true;

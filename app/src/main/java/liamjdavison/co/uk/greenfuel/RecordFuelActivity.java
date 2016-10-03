@@ -3,12 +3,14 @@ package liamjdavison.co.uk.greenfuel;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,30 +75,58 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 		Bundle bundle = getIntent().getExtras();
 		if (null != bundle && null != bundle.get("vehicleId")) {
 			vehicleId = bundle.getLong("vehicleId");
+		} else {
+			Log.e("RecordFuelActivity", "No vehicleId was specified when trying to build UI");
+			return;
 		}
+		// load vehicle
+		DaoSession daoSession = ((GreenFuel) getApplication()).getDaoSession();
+		vehicleDao = daoSession.getVehicleDao();
+		vehicle = vehicleDao.load(vehicleId);
 
 
 		editDate = (EditText) findViewById(R.id.editDate);
+		editDate.requestFocus();
 		editFuelVolume = (EditText) findViewById(R.id.editLitres);
-		editFuelVolume.requestFocus();
+//		editFuelVolume.requestFocus();
 
 		tilVolume = (TextInputLayout) findViewById(R.id.tilVolume);
 		tilCost = (TextInputLayout) findViewById(R.id.tilCost);
 
 		editCost = (EditText) findViewById(R.id.editCost);
-		tilCost.setHint(getApplicationContext().getString(R.string.hnt_totalCost) + " (" + Currency.getInstance(Locale.getDefault()).getSymbol() + ")");
+		tilCost.setHint(getStringForRes(R.string.hnt_totalCost) + " (" + Currency.getInstance(Locale.getDefault()).getSymbol() + ")");
 		editOdometer = (EditText) findViewById(R.id.editOdometer);
 		tilOdo = (TextInputLayout) findViewById(R.id.tilOdo);
 		buttonSave = (Button) findViewById(R.id.buttonSave);
 
 		// vehicle summary
 		vehicleInfo = (TextView) findViewById(R.id.lblVehicleInfo);
-		DaoSession daoSession = ((GreenFuel) getApplication()).getDaoSession();
-		vehicleDao = daoSession.getVehicleDao();
-		vehicle = vehicleDao.load(vehicleId);
+
 		if (null != vehicle) {
 			vehicleInfo.setText(String.format("%s %s, %s", vehicle.getManufacturer(), vehicle.getModel(), vehicle.getRegistration()));
 		}
+
+		editFuelVolume.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					tilVolume.setHint(vehicle.getFuelVolumeIsMetric() ? getStringForRes(R.string.lbl_UnitLitres) : getStringForRes(R.string.lbl_UnitGallons));
+				} else {
+					tilVolume.setHint(getStringForRes(R.string.hnt_fuelVolume));
+				}
+			}
+		});
+
+		editOdometer.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					tilOdo.setHint(vehicle.getDistanceIsMetric() ? getStringForRes(R.string.lbl_UnitKilometers) : getStringForRes(R.string.lbl_UnitMiles));
+				} else {
+					tilOdo.setHint(getStringForRes(R.string.lbl_Odometer));
+				}
+			}
+		});
 
 		// date picker
 		editDate.setOnClickListener(new View.OnClickListener() {
@@ -178,5 +208,9 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 				Toast toast = Toast.makeText(this, "Unknown dialog tag: " + dialogTag, Toast.LENGTH_SHORT);
 				toast.show();
 		}
+	}
+
+	private String getStringForRes(@StringRes int stringResId) {
+		return getApplicationContext().getString(stringResId);
 	}
 }
