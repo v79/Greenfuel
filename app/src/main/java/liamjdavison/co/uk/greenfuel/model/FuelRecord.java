@@ -2,6 +2,7 @@ package liamjdavison.co.uk.greenfuel.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
@@ -37,7 +38,7 @@ public class FuelRecord implements Parcelable {
 	// this is the join parameter; I don't need to specify both sides of the relationship
 	private Long vehicleId;
 
-	public FuelRecord(Date date, BigDecimal cost, BigDecimal fuelVolume, int odometer, Long vehicleId) {
+	public FuelRecord(Date date, BigDecimal cost, BigDecimal fuelVolume, @Nullable Integer odometer, Long vehicleId) {
 		this.setDate(date);
 		this.setCost(cost);
 		this.setVehicleId(vehicleId);

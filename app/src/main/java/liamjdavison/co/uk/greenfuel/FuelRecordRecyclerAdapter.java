@@ -55,7 +55,7 @@ public class FuelRecordRecyclerAdapter extends RecyclerView.Adapter<FRViewHolder
 		holder.rowCost.setText(new StringBuilder().append(currency.getSymbol()).append(record.getCost()));
 		final String fuelText = new StringBuilder().append(decimalFormat.format(record.getFuelVolume())).toString();
 		holder.rowFuel.setText(fuelText);
-		holder.rowOdo.setText(String.valueOf(record.getOdometer()));
+		holder.rowOdo.setText(record.getOdometer() == -1 ? "(none)" : String.valueOf(record.getOdometer()));
 
 		holder.cardView.setOnClickListener(new View.OnClickListener() {
 			@Override

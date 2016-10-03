@@ -154,7 +154,11 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 					BigDecimal cost;
 
 					cost = new BigDecimal(editCost.getText().toString());
-					record = new FuelRecord(recordDate.getTime(), cost, new BigDecimal(editFuelVolume.getText().toString()), Integer.parseInt(editOdometer.getText().toString()), vehicleId);
+					Integer odoReading = null;
+					if (!editOdometer.getText().toString().isEmpty()) {
+						odoReading = Integer.parseInt(editOdometer.getText().toString());
+					}
+					record = new FuelRecord(recordDate.getTime(), cost, new BigDecimal(editFuelVolume.getText().toString()), odoReading, vehicleId);
 					Intent result = new Intent();
 					result.putExtra("fuelRecord", record);
 					setResult(RESULT_OK, result);
