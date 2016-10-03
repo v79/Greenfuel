@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,11 +28,9 @@ import java.util.Locale;
 import liamjdavison.co.uk.greenfuel.R;
 import liamjdavison.co.uk.greenfuel.ReferenceData;
 import liamjdavison.co.uk.greenfuel.model.FuelType;
-import liamjdavison.co.uk.greenfuel.model.FuelTypeDao;
 import liamjdavison.co.uk.greenfuel.model.Vehicle;
 
 import static liamjdavison.co.uk.greenfuel.R.id.fuelTypeSpinner;
-import static liamjdavison.co.uk.greenfuel.R.id.toggleDistanceUnits;
 
 /**
  * Fragment for capturing information about a new Vehicle

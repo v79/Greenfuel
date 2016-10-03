@@ -3,8 +3,8 @@ package liamjdavison.co.uk.greenfuel;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -50,7 +50,8 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 
 	private EditText editDate, editCost, editFuelVolume, editOdometer;
 	private TextInputLayout tilVolume, tilCost, tilOdo;
-	private TextView vehicleInfo;
+
+	private TextView vehicleInfo, costPerVolume;
 	private Button buttonSave;
 
 	@Override
@@ -69,6 +70,7 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 		setSupportActionBar(toolbar);
 
 		buildUI();
+		updateCostPerFuelVolume();
 	}
 
 	private void buildUI() {
@@ -98,6 +100,7 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 		editOdometer = (EditText) findViewById(R.id.editOdometer);
 		tilOdo = (TextInputLayout) findViewById(R.id.tilOdo);
 		buttonSave = (Button) findViewById(R.id.buttonSave);
+		costPerVolume = (TextView) findViewById(R.id.lbl_costPerUnit);
 
 		// vehicle summary
 		vehicleInfo = (TextView) findViewById(R.id.lblVehicleInfo);
@@ -114,6 +117,7 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 				} else {
 					tilVolume.setHint(getStringForRes(R.string.hnt_fuelVolume));
 				}
+				updateCostPerFuelVolume();
 			}
 		});
 
@@ -125,6 +129,7 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 				} else {
 					tilOdo.setHint(getStringForRes(R.string.lbl_Odometer));
 				}
+				updateCostPerFuelVolume();
 			}
 		});
 
@@ -217,4 +222,44 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 	private String getStringForRes(@StringRes int stringResId) {
 		return getApplicationContext().getString(stringResId);
 	}
+
+	private void updateCostPerFuelVolume() {
+		StringBuilder sb = new StringBuilder();
+		if (!editCost.getText().toString().isEmpty() && !editFuelVolume.getText().toString().isEmpty()) {
+			Float costPerUnitVolume = Float.parseFloat(editCost.getText().toString()) / Float.parseFloat(editFuelVolume.getText().toString());
+			sb.append(Currency.getInstance(Locale.getDefault()).getSymbol());
+			sb.append(decimalFormat.format(costPerUnitVolume));
+			sb.append("/");
+			sb.append(vehicle.getFuelVolumeIsMetric() ? getStringForRes(R.string.lbl_UnitLitres) : getStringForRes(R.string.lbl_UnitGallons));
+		}
+
+		costPerVolume.setText(sb.toString());
+	}
+
+
+	/**
+	 * Handle device changes, eg orientation
+	 *
+	 * @param outState current status bundle to save
+	 */
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putSerializable(BUNDLE_FR_DATE, recordDate);
+	}
+
+	/**
+	 * Restore state after a device change
+	 *
+	 * @param savedInstanceState status bundle
+	 */
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		if (null != savedInstanceState) {
+			recordDate = (Calendar) savedInstanceState.getSerializable(BUNDLE_FR_DATE);
+		}
+	}
+
 }
