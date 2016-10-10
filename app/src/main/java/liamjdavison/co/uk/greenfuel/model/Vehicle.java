@@ -8,7 +8,7 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Unique;
-import org.greenrobot.greendao.converter.PropertyConverter;
+import org.greenrobot.greendao.query.Query;
 
 import java.util.Date;
 import java.util.List;
@@ -302,6 +302,25 @@ public class Vehicle {
 
 	public void setFuelVolumeIsMetric(Boolean fuelVolumeIsMetric) {
 		this.fuelVolumeIsMetric = fuelVolumeIsMetric;
+	}
+
+	/**
+	 * Get the maximum Odometer reading for this vehicle
+	 *
+	 * @return -1 if not found
+	 */
+	public Integer getMaxOdo() {
+		final DaoSession daoSession = this.daoSession;
+		if (daoSession == null) {
+			throw new DaoException("Entity is detached from DAO context");
+		}
+		FuelRecordDao fuelRecordDao = daoSession.getFuelRecordDao();
+		Query maxOdoQuery = fuelRecordDao.queryBuilder().where(FuelRecordDao.Properties.VehicleId.eq(getId())).orderDesc(FuelRecordDao.Properties.Odometer).limit(1).build();
+		List<FuelRecord> fuelRecords = maxOdoQuery.list();
+		if (fuelRecords != null && fuelRecords.size() > 0) {
+			return fuelRecords.get(0).getOdometer();
+		}
+		return -1;
 	}
 }
 

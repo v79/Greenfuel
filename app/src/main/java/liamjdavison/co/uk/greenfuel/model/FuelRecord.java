@@ -6,14 +6,12 @@ import android.support.annotation.Nullable;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.DaoException;
 
 /**
  * Created by Liam Davison on 08/08/2016.

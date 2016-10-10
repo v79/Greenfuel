@@ -1,8 +1,8 @@
 package liamjdavison.co.uk.greenfuel.model;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 /**
  * A simple table representing a fuel type, e.g. Petrol or Diesel
@@ -50,4 +50,5 @@ public class FuelType {
 	public String toString() {
 		return this.getName();
 	}
+
 }

@@ -3,7 +3,6 @@ package liamjdavison.co.uk.greenfuel;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -46,6 +45,8 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 
 	private FuelRecord record;
 	private Integer maxOdoReading = -1;
+
+	private String maxOdoString;
 	private Long vehicleId;
 
 	private EditText editDate, editCost, editFuelVolume, editOdometer;
@@ -85,7 +86,15 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 		DaoSession daoSession = ((GreenFuel) getApplication()).getDaoSession();
 		vehicleDao = daoSession.getVehicleDao();
 		vehicle = vehicleDao.load(vehicleId);
-
+		maxOdoReading = vehicle.getMaxOdo();
+		StringBuilder maxOdoSb = new StringBuilder();
+		if (vehicle != null) {
+			if (vehicle.getMaxOdo() != -1) {
+				maxOdoSb.append(vehicle.getMaxOdo()).append(" ");
+			}
+			maxOdoSb.append(vehicle.getDistanceIsMetric() ? getStringForRes(R.string.lbl_UnitKilometers) : getStringForRes(R.string.lbl_UnitMiles));
+		}
+		maxOdoString = maxOdoSb.toString();
 
 		editDate = (EditText) findViewById(R.id.editDate);
 		editDate.requestFocus();
@@ -125,7 +134,7 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if (hasFocus) {
-					tilOdo.setHint(vehicle.getDistanceIsMetric() ? getStringForRes(R.string.lbl_UnitKilometers) : getStringForRes(R.string.lbl_UnitMiles));
+					tilOdo.setHint(maxOdoString);
 				} else {
 					tilOdo.setHint(getStringForRes(R.string.lbl_Odometer));
 				}
