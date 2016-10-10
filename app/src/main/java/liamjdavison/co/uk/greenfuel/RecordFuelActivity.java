@@ -29,11 +29,20 @@ import liamjdavison.co.uk.greenfuel.model.FuelRecord;
 import liamjdavison.co.uk.greenfuel.model.Vehicle;
 import liamjdavison.co.uk.greenfuel.model.VehicleDao;
 
+/**
+ * Record a new {@link FuelRecord} for the current {@link Vehicle}
+ */
 public class RecordFuelActivity extends AppCompatActivity  implements DatePickerFragment.OnDateSelectedListener  {
 
 	public static final String DATE_PICKER = "datePicker";
 	public static final String DATE_FORMAT_UK = "dd/MM/yyyy";
+
 	private static final String BUNDLE_FR_DATE = "BUNDLE_FR_DATE";
+
+	public static final String BUNDLE_VEHICLE_ID = "vehicleId";
+
+	public static final String BUNDLE_FUEL_RECORD = "fuelRecord";
+
 	final DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
 	private VehicleDao vehicleDao;
@@ -69,6 +78,7 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		buildUI();
 		updateCostPerFuelVolume();
@@ -76,8 +86,8 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 
 	private void buildUI() {
 		Bundle bundle = getIntent().getExtras();
-		if (null != bundle && null != bundle.get("vehicleId")) {
-			vehicleId = bundle.getLong("vehicleId");
+		if (null != bundle && null != bundle.get(BUNDLE_VEHICLE_ID)) {
+			vehicleId = bundle.getLong(BUNDLE_VEHICLE_ID);
 		} else {
 			Log.e("RecordFuelActivity", "No vehicleId was specified when trying to build UI");
 			return;
@@ -174,7 +184,7 @@ public class RecordFuelActivity extends AppCompatActivity  implements DatePicker
 					}
 					record = new FuelRecord(recordDate.getTime(), cost, new BigDecimal(editFuelVolume.getText().toString()), odoReading, vehicleId);
 					Intent result = new Intent();
-					result.putExtra("fuelRecord", record);
+					result.putExtra(BUNDLE_FUEL_RECORD, record);
 					setResult(RESULT_OK, result);
 					finish();
 				}

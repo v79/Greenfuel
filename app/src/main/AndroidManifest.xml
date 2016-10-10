@@ -12,7 +12,6 @@
         <activity android:name=".FuelRecorderOverview">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -30,6 +29,9 @@
             android:name=".RecordFuelActivity"
             android:label="@string/title_activity_record_fuel"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="liamjdavison.co.uk.greenfuel.FuelRecorderOverview"/>
         </activity>
     </application>
 

@@ -1,9 +1,9 @@
 package liamjdavison.co.uk.greenfuel;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,6 +25,9 @@ import liamjdavison.co.uk.greenfuel.model.FuelRecordDao;
 import liamjdavison.co.uk.greenfuel.model.Vehicle;
 import liamjdavison.co.uk.greenfuel.model.VehicleDao;
 
+/**
+ * Main Activity for the FuelRecorder app. Displays a list of {@link FuelRecord} and prompts the user to create another, or to register a {@link Vehicle} if none exists.
+ */
 public class FuelRecorderOverview extends AppCompatActivity {
 
 	private static final int REGISTER_NEW_VEHICLE = 1;

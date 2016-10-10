@@ -26,8 +26,8 @@
     <string name="hnt_totalCost">Total cost</string>
     <string name="hnt_Odo">Odometer</string>
     <string name="register_vehicle_title">Register New Vehicle</string>
-    <string name="title_activity_developer_tools">DeveloperTools</string>
-    <string name="title_activity_record_fuel">RecordFuelActivity</string>
+    <string name="title_activity_developer_tools">Developer Tools</string>
+    <string name="title_activity_record_fuel">Record Fuel Purchase</string>
     <string name="action_settings">Settings</string>
     <string name="lbl_vehicle">Vehicle</string>
     <string name="lbl_costPerVolume">£ / l</string>
