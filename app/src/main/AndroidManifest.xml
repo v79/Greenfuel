@@ -33,6 +33,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="liamjdavison.co.uk.greenfuel.FuelRecorderOverview"/>
         </activity>
+        <activity
+            android:name=".VehicleManagerActivity"
+            android:label="Vehicle Manager"
+            android:parentActivityName=".FuelRecorderOverview"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="liamjdavison.co.uk.greenfuel.FuelRecorderOverview"/>
+        </activity>
     </application>
 
 </manifest>

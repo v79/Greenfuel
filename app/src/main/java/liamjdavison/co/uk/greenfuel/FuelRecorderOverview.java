@@ -146,6 +146,11 @@ public class FuelRecorderOverview extends AppCompatActivity {
 				Intent developerIntent = new Intent(this, DeveloperTools.class);
 				startActivity(developerIntent);
 				return true;
+			case R.id.menu_vehicles:
+				// show vehicle list
+				Intent vehicleManagerIntent = new Intent(this, VehicleManagerActivity.class);
+				startActivity(vehicleManagerIntent);
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
